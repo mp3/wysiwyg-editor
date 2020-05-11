@@ -4,5 +4,17 @@
   "main": "index.js",
   "repository": "git@github.com:mp3/wysiwyg-editor.git",
   "author": "mp3 <im.in.a.coma.xxx@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.5",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "netlify-cli": "^2.50.0",
+    "parcel": "^1.12.4",
+    "typescript": "^3.8.3"
+  }
 }
