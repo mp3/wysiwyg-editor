@@ -5,6 +5,12 @@
   "repository": "git@github.com:mp3/wysiwyg-editor.git",
   "author": "mp3 <im.in.a.coma.xxx@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "parcel src/index.html --open",
+    "build": "parcel build src/index.html",
+    "typecheck": "tsc -p . --noEmit",
+    "deploy": "netlify deploy -d dist --prod"
+  },
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
