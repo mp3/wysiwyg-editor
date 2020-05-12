@@ -43,6 +43,7 @@ const Main = () => {
 const GlobalStyle = createGlobalStyle`
 * {
   box-sizing: border-box;
+  outline: none;
 }
 
 html, body {
@@ -58,7 +59,6 @@ body {
   border: 1px solid #ccc;
   font-family: 'Open Sans', Helvetica, sans-serif;
   font-size: 1.2em;
-  height: 200px;
   margin: 0 auto;
   width: 450px;
 }
