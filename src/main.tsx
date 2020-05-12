@@ -25,7 +25,15 @@ const Main = () => {
         <button id="image-button"><i className="fa fa-camera"></i></button>
         <button id="video-button"><i className="fa fa-play"></i></button>
         <button id="tweet-button"><i className="fa fa-twitter"></i></button>
-        <button id="divider-button"><i className="fa fa-minus"></i></button>
+        <button id="divider-button" onClick={() => {
+          const range = quill?.getSelection(true)
+          if (!range) {
+            return
+          }
+          quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
+          quill?.insertEmbed(range.index + 1, 'divider', 'true', (Quill as any).sources.USER)
+          quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
+        }}><i className="fa fa-minus"></i></button>
       </div>
       <div id="editor-container">Tell your story...</div>
     </React.Fragment>
@@ -47,12 +55,29 @@ body {
 }
 
 #editor-container {
-  display: block;
+  border: 1px solid #ccc;
   font-family: 'Open Sans', Helvetica, sans-serif;
   font-size: 1.2em;
   height: 200px;
   margin: 0 auto;
   width: 450px;
+}
+#editor-container h1 + p,
+#editor-container h2 + p {
+  margin-top: 0.5em; 
+}
+#editor-container blockquote {
+  border-left: 4px solid #111;
+  padding-left: 1em;
+}
+#editor-container hr {
+  border: none;
+  color: #111;
+  letter-spacing: 1em;
+  text-align: center;
+}
+#editor-container hr:before {
+  content: '...';
 }
 
 #tooltip-controls, #sidebar-controls {
@@ -69,10 +94,9 @@ button {
   height: 32px;
   width: 32px;
   text-align: center;
-
-  &:active, &:foxus {
-    outline: none;
-  }
+}
+button:active, button:focus {
+  outline: none;
 }
 `
 
