@@ -23,18 +23,28 @@ const Main = () => {
       </div>
       <div id="sidebar-controls">
         <button id="image-button" onClick={() => {
-          const range = quill?.getSelection(true);
+          const range = quill?.getSelection(true)
           if (!range) {
             return
           }
-          quill?.insertText(range.index, '\n', (Quill as any).sources.USER);
+          quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
           quill?.insertEmbed(range.index + 1, 'image', {
             alt: 'Quill Cloud',
             url: 'https://quilljs.com/0.20/assets/images/cloud.png'
-          }, (Quill as any).sources.USER);
-          quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT);
+          }, (Quill as any).sources.USER)
+          quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
         }}><i className="fa fa-camera"></i></button>
-        <button id="video-button"><i className="fa fa-play"></i></button>
+        <button id="video-button" onClick={() => {
+          const range = quill?.getSelection(true)
+          if (!range) {
+            return
+          }
+          quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
+          const url = 'https://www.youtube.com/embed/QHH3iSeDBLo?showinfo=0'
+          quill?.insertEmbed(range.index + 1, 'video', url, (Quill as any).sources.USER)
+          quill?.formatText(range.index + 1, 1, { height: '170', width: '400' })
+          quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
+        }}><i className="fa fa-play"></i></button>
         <button id="tweet-button"><i className="fa fa-twitter"></i></button>
         <button id="divider-button" onClick={() => {
           const range = quill?.getSelection(true)

@@ -61,6 +61,41 @@ class ImageBlot extends BlockEmbed {
 ImageBlot.blotName = 'image'
 ImageBlot.tagName = 'img'
 
+class VideoBlot extends BlockEmbed {
+  static create(url: string) {
+    const node = super.create()
+    node.setAttribute('src', url)
+    node.setAttribute('frameborder', '0')
+    node.setAttribute('allowfullscreen', true)
+    return node
+  }
+
+  static formats(node: Element) {
+    return {
+      height: node.getAttribute('height') ?? undefined,
+      width: node.getAttribute('width') ?? undefined
+    }
+  }
+
+  static value(node: Element) {
+    return node.getAttribute('src')
+  }
+
+  format(name: string, value: string) {
+    if (name === 'height' || name === 'width') {
+      if (value) {
+        this.domNode.setAttribute(name, value)
+      } else {
+        this.domNode.removeAttribute(name, value)
+      }
+    } else {
+      super.format(name, value)
+    }
+  }
+}
+VideoBlot.blotName = 'video'
+VideoBlot.tagName = 'iframe'
+
 Quill.register(BoldBlot)
 Quill.register(ItalibBlot)
 Quill.register(LinkBlot)
@@ -68,5 +103,6 @@ Quill.register(BlockquotesBlot)
 Quill.register(HeaderBlot)
 Quill.register(DividerBlot)
 Quill.register(ImageBlot)
+Quill.register(VideoBlot)
 
 export default Quill
