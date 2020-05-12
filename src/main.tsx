@@ -4,17 +4,18 @@ import { createGlobalStyle } from 'styled-components'
 import Quill from './lib/Quill'
 
 const Main = () => {
+  const [quill, setQuill] = React.useState<Quill | null>(null)
 
   React.useEffect(() => {
-    new Quill('#editor-container')
+    setQuill(new Quill('#editor-container'))
   }, [])
 
   return (
     <React.Fragment>
       <GlobalStyle />
       <div id="tooltip-controls">
-        <button id="bold-button"><i className="fa fa-bold"></i></button>
-        <button id="italic-button"><i className="fa fa-italic"></i></button>
+        <button id="bold-button" onClick={() => quill?.format('bold', true)}><i className="fa fa-bold"></i></button>
+        <button id="italic-button" onClick={() => quill?.format('italic', true)}><i className="fa fa-italic"></i></button>
         <button id="link-button"><i className="fa fa-link"></i></button>
         <button id="blockquote-button"><i className="fa fa-quote-right"></i></button>
         <button id="header-1-button"><i className="fa fa-header"><sub>1</sub></i></button>
@@ -26,7 +27,7 @@ const Main = () => {
         <button id="tweet-button"><i className="fa fa-twitter"></i></button>
         <button id="divider-button"><i className="fa fa-minus"></i></button>
       </div>
-      <textarea id="editor-container" defaultValue="Tell your story..."></textarea>
+      <div id="editor-container">Tell your story...</div>
     </React.Fragment>
   )
 }
