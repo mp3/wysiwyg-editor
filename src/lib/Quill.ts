@@ -1,6 +1,7 @@
 import Quill from 'quill'
 
 const Inline = Quill.import('blots/inline')
+const Block = Quill.import('blots/block')
 
 class BoldBlot extends Inline {}
 BoldBlot.blotName = 'bold'
@@ -25,8 +26,22 @@ class LinkBlot extends Inline {
 LinkBlot.blotName = 'link'
 LinkBlot.tagName = 'a'
 
+class BlockquotesBlot extends Block {}
+BlockquotesBlot.blotName = 'blockquote'
+BlockquotesBlot.tagName = 'blockquote'
+
+class HeaderBlot extends Block {
+  static formats(node) {
+    return HeaderBlot.tagName.indexOf(node.tagName) + 1
+  }
+}
+HeaderBlot.blotName = 'header'
+HeaderBlot.tagName = ['H1', 'H2']
+
 Quill.register(BoldBlot)
 Quill.register(ItalibBlot)
 Quill.register(LinkBlot)
+Quill.register(BlockquotesBlot)
+Quill.register(HeaderBlot)
 
 export default Quill

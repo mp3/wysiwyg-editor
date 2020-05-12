@@ -17,9 +17,9 @@ const Main = () => {
         <button id="bold-button" onClick={() => quill?.format('bold', true)}><i className="fa fa-bold"></i></button>
         <button id="italic-button" onClick={() => quill?.format('italic', true)}><i className="fa fa-italic"></i></button>
         <button id="link-button" onClick={() => quill?.format('link', prompt('Enter link URL'))}><i className="fa fa-link"></i></button>
-        <button id="blockquote-button"><i className="fa fa-quote-right"></i></button>
-        <button id="header-1-button"><i className="fa fa-header"><sub>1</sub></i></button>
-        <button id="header-2-button"><i className="fa fa-header"><sub>2</sub></i></button>
+        <button id="blockquote-button" onClick={() => quill?.format('blockquote', true)}><i className="fa fa-quote-right"></i></button>
+        <button id="header-1-button" onClick={() => quill?.format('header', 1)}><i className="fa fa-header"><sub>1</sub></i></button>
+        <button id="header-2-button" onClick={() => quill?.format('header', 2)}><i className="fa fa-header"><sub>2</sub></i></button>
       </div>
       <div id="sidebar-controls">
         <button id="image-button"><i className="fa fa-camera"></i></button>
