@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createGlobalStyle } from 'styled-components'
-// import Quill from './lib/Quill'
+import Quill from './lib/Quill'
 
 const Main = () => {
 
-  // React.useEffect(() => {
-  //   new Quill('#editor')
-  // }, [])
+  React.useEffect(() => {
+    new Quill('#editor-container')
+  }, [])
 
   return (
     <React.Fragment>
