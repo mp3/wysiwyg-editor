@@ -1,5 +1,11 @@
 import Quill from 'quill'
 
+declare global {
+  interface Window {
+    twttr: any
+  }
+}
+
 const Inline = Quill.import('blots/inline')
 const Block = Quill.import('blots/block')
 const BlockEmbed = Quill.import('blots/block/embed')
@@ -96,6 +102,22 @@ class VideoBlot extends BlockEmbed {
 VideoBlot.blotName = 'video'
 VideoBlot.tagName = 'iframe'
 
+class TweetBlot extends BlockEmbed {
+  static create(id: string) {
+    const node = super.create()
+    node.dataset.id = id;
+    window.twttr.widgets.createTweet(id, node);
+    return node
+  }
+
+  static value(domNode: HTMLElement) {
+    return domNode.dataset.id
+  }
+}
+TweetBlot.blotName = 'tweet'
+TweetBlot.tagName = 'div'
+TweetBlot.className = 'tweet'
+
 Quill.register(BoldBlot)
 Quill.register(ItalibBlot)
 Quill.register(LinkBlot)
@@ -104,5 +126,6 @@ Quill.register(HeaderBlot)
 Quill.register(DividerBlot)
 Quill.register(ImageBlot)
 Quill.register(VideoBlot)
+Quill.register(TweetBlot)
 
 export default Quill

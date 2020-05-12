@@ -45,7 +45,16 @@ const Main = () => {
           quill?.formatText(range.index + 1, 1, { height: '170', width: '400' })
           quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
         }}><i className="fa fa-play"></i></button>
-        <button id="tweet-button"><i className="fa fa-twitter"></i></button>
+        <button id="tweet-button" onClick={() => {
+          const range = quill?.getSelection(true)
+          const id = '464454167226904576'
+          if (!range) {
+            return
+          }
+          quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
+          quill?.insertEmbed(range.index + 1, 'tweet', id, (Quill as any).sources.USER)
+          quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
+        }}><i className="fa fa-twitter"></i></button>
         <button id="divider-button" onClick={() => {
           const range = quill?.getSelection(true)
           if (!range) {
