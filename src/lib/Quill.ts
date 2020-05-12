@@ -43,11 +43,30 @@ class DividerBlot extends BlockEmbed {}
 DividerBlot.blotName = 'divider'
 DividerBlot.tagName = 'hr'
 
+class ImageBlot extends BlockEmbed {
+  static create(value: { alt: string, url: string }) {
+    const node = super.create()
+    node.setAttribute('alt', value.alt)
+    node.setAttribute('src', value.url)
+    return node
+  }
+
+  static value(node: Element) {
+    return {
+      alt: node.getAttribute('alt'),
+      src: node.getAttribute('src')
+    }
+  }
+}
+ImageBlot.blotName = 'image'
+ImageBlot.tagName = 'img'
+
 Quill.register(BoldBlot)
 Quill.register(ItalibBlot)
 Quill.register(LinkBlot)
 Quill.register(BlockquotesBlot)
 Quill.register(HeaderBlot)
 Quill.register(DividerBlot)
+Quill.register(ImageBlot)
 
 export default Quill

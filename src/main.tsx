@@ -22,7 +22,18 @@ const Main = () => {
         <button id="header-2-button" onClick={() => quill?.format('header', 2)}><i className="fa fa-header"><sub>2</sub></i></button>
       </div>
       <div id="sidebar-controls">
-        <button id="image-button"><i className="fa fa-camera"></i></button>
+        <button id="image-button" onClick={() => {
+          const range = quill?.getSelection(true);
+          if (!range) {
+            return
+          }
+          quill?.insertText(range.index, '\n', (Quill as any).sources.USER);
+          quill?.insertEmbed(range.index + 1, 'image', {
+            alt: 'Quill Cloud',
+            url: 'https://quilljs.com/0.20/assets/images/cloud.png'
+          }, (Quill as any).sources.USER);
+          quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT);
+        }}><i className="fa fa-camera"></i></button>
         <button id="video-button"><i className="fa fa-play"></i></button>
         <button id="tweet-button"><i className="fa fa-twitter"></i></button>
         <button id="divider-button" onClick={() => {
