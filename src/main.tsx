@@ -26,7 +26,7 @@ const Main = () => {
         <button id="tweet-button"><i className="fa fa-twitter"></i></button>
         <button id="divider-button"><i className="fa fa-minus"></i></button>
       </div>
-      <textarea id="editor-container">Tell your story...</textarea>
+      <textarea id="editor-container" defaultValue="Tell your story..."></textarea>
     </React.Fragment>
   )
 }
