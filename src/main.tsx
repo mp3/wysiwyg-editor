@@ -3,12 +3,51 @@ import ReactDOM from 'react-dom'
 import { createGlobalStyle } from 'styled-components'
 import Quill from './lib/Quill'
 
+const Block = Quill.import('blots/block')
+
 const Main = () => {
   const [quill, setQuill] = React.useState<Quill | null>(null)
 
   React.useEffect(() => {
-    setQuill(new Quill('#editor-container'))
-  }, [])
+    if (quill) {
+      const tooltipControls = document.querySelector("#tooltip-controls") as HTMLElement | null
+      const sidebarControls = document.querySelector("#sidebar-controls") as HTMLElement | null
+      if (!(tooltipControls && sidebarControls)) {
+        return
+      }
+
+      quill.addContainer(tooltipControls)
+      quill.addContainer(sidebarControls)
+  
+      quill.on((Quill as any).events.EDITOR_CHANGE, (eventType, range) => {
+        if (eventType !== (Quill as any).events.SELECTION_CHANGE) {
+          return
+        }
+        if (range === null) {
+          return
+        }
+        if ((range as any).length === 0) {
+          tooltipControls.setAttribute('style', 'display: none;')
+          const [block, _offset] = (quill.scroll as any).descendant(Block, (range as any).index)
+          if (block != null && block.domNode.firstChild instanceof HTMLBRElement) {
+            let lineBounds = quill.getBounds(range as any)
+            sidebarControls.setAttribute('style', `display: block; left: ${lineBounds.left - 50}px; top : ${lineBounds.top - 2}px;`)
+          } else {
+            tooltipControls.setAttribute('style', 'display: none;')
+            sidebarControls.setAttribute('style', 'display: none;')
+          }
+        } else {
+          tooltipControls.setAttribute('style', 'display: none;')
+          sidebarControls.setAttribute('style', 'display: none;')
+          let rangeBounds = quill.getBounds(range as any)
+          tooltipControls.setAttribute('style', `display: block;`)
+          tooltipControls.setAttribute('style', `display: block; left: ${rangeBounds.left + rangeBounds.width/2 - tooltipControls.offsetWidth/2}px; top: ${rangeBounds.bottom + 10}px;`)
+        }
+      })
+    } else {
+      setQuill(new Quill('#editor-container'))
+    }
+  }, [quill])
 
   return (
     <React.Fragment>
@@ -79,18 +118,29 @@ const GlobalStyle = createGlobalStyle`
 html, body {
   height: 100%;
   margin: 0;
+  padding: 0;
   width: 100%;
-}
-body {
-  padding: 25px;
 }
 
 #editor-container {
-  border: 1px solid #ccc;
   font-family: 'Open Sans', Helvetica, sans-serif;
   font-size: 1.2em;
+  height: 100%;
   margin: 0 auto;
   width: 450px;
+  border: 1px solid #ccc;
+}
+#editor-container .ql-editor {
+  min-height: 100%;
+  height: inherit;
+  overflow-y: inherit;
+  padding-bottom: 75px;
+}
+#editor-container .ql-editor > * {
+  margin-top: 1.5em;
+}
+#editor-container .ql-editor > *:last-child {
+  margin-bottom: 50px;
 }
 #editor-container h1 + p,
 #editor-container h2 + p {
@@ -110,13 +160,70 @@ body {
   content: '...';
 }
 
-#tooltip-controls, #sidebar-controls {
-  text-align: center;
+#tooltip-controls {
+  background-color: #111;
+  border-radius: 4px;
+  display: none;
+  padding: 5px 10px;
+  position: absolute;
+}
+#tooltip-controls::before {
+  box-sizing: border-box;
+  border-bottom: 6px solid #111;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  content: ' ';
+  display: block;
+  height: 6px;
+  left: 50%;
+  position: absolute;
+  margin-left: -6px;
+  margin-top: -6px;
+  top: 0;
+  width: 6px;
+}
+#tooltip-controls button {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+}
+#tooltip-controls button.active {
+  color: #21b384;
+}
+
+#sidebar-controls {
+  display: none;
+  position: absolute;
+}
+#sidebar-controls button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+#sidebar-controls i.fa {
+  background-color: #fff;
+  border: 1px solid #111;
+  border-radius: 50%;
+  color: #111;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+}
+#sidebar-controls .controls {
+  display: none;
+  margin-left: 15px;
+}
+#sidebar-controls #show-controls i.fa::before {
+  content: "\f067";
+}
+#sidebar-controls.active .controls {
+  display: inline-block;
+}
+#sidebar-controls.active #show-controls i.fa::before {
+  content: "\f00d";
 }
 
 button {
-  background: transparent;
-  border: none;
   cursor: pointer;
   display: inline-block;
   font-size: 18px;
