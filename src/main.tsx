@@ -26,6 +26,7 @@ const Main = () => {
         if (range === null) {
           return
         }
+
         if ((range as any).length === 0) {
           tooltipControls.setAttribute('style', 'display: none;')
           const [block, _offset] = (quill.scroll as any).descendant(Block, (range as any).index)
@@ -41,6 +42,7 @@ const Main = () => {
         } else {
           tooltipControls.style.display = 'none'
           sidebarControls.style.display = 'none'
+
           let rangeBounds = quill.getBounds(range as any)
           tooltipControls.style.display = 'block'
           tooltipControls.style.top = `${rangeBounds.bottom + 10}px`
