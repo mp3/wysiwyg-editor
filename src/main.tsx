@@ -31,17 +31,20 @@ const Main = () => {
           const [block, _offset] = (quill.scroll as any).descendant(Block, (range as any).index)
           if (block != null && block.domNode.firstChild instanceof HTMLBRElement) {
             let lineBounds = quill.getBounds(range as any)
-            sidebarControls.setAttribute('style', `display: block; left: ${lineBounds.left - 50}px; top : ${lineBounds.top - 2}px;`)
+            sidebarControls.style.display = 'block'
+            sidebarControls.style.top = `${lineBounds.top - 2}px`
+            sidebarControls.style.left = `${lineBounds.left - 50}px`
           } else {
-            tooltipControls.setAttribute('style', 'display: none;')
-            sidebarControls.setAttribute('style', 'display: none;')
+            tooltipControls.style.display = 'none'
+            sidebarControls.style.display = 'none'
           }
         } else {
-          tooltipControls.setAttribute('style', 'display: none;')
-          sidebarControls.setAttribute('style', 'display: none;')
+          tooltipControls.style.display = 'none'
+          sidebarControls.style.display = 'none'
           let rangeBounds = quill.getBounds(range as any)
-          tooltipControls.setAttribute('style', `display: block;`)
-          tooltipControls.setAttribute('style', `display: block; left: ${rangeBounds.left + rangeBounds.width/2 - tooltipControls.offsetWidth/2}px; top: ${rangeBounds.bottom + 10}px;`)
+          tooltipControls.style.display = 'block'
+          tooltipControls.style.top = `${rangeBounds.bottom + 10}px`
+          tooltipControls.style.left = `${rangeBounds.left + rangeBounds.width/2 - tooltipControls.offsetWidth/2}px`
         }
       })
     } else {
