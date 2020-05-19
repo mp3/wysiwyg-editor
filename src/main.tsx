@@ -32,16 +32,19 @@ const Main = () => {
           const [block, _offset] = (quill.scroll as any).descendant(Block, (range as any).index)
           if (block != null && block.domNode.firstChild instanceof HTMLBRElement) {
             let lineBounds = quill.getBounds(range as any)
+            sidebarControls.classList.remove('active')
             sidebarControls.style.display = 'block'
             sidebarControls.style.top = `${lineBounds.top - 2}px`
             sidebarControls.style.left = `${lineBounds.left - 50}px`
           } else {
             tooltipControls.style.display = 'none'
             sidebarControls.style.display = 'none'
+            sidebarControls.classList.remove('active')
           }
         } else {
           tooltipControls.style.display = 'none'
           sidebarControls.style.display = 'none'
+          sidebarControls.classList.remove('active')
 
           let rangeBounds = quill.getBounds(range as any)
           tooltipControls.style.display = 'block'
@@ -66,48 +69,59 @@ const Main = () => {
         <button id="header-2-button" onClick={() => quill?.format('header', 2)}><i className="fa fa-header"><sub>2</sub></i></button>
       </div>
       <div id="sidebar-controls">
-        <button id="image-button" onClick={() => {
-          const range = quill?.getSelection(true)
-          if (!range) {
-            return
+        <button id="show-controls" onClick={() => {
+          const sidebarControls = document.querySelector("#sidebar-controls") as HTMLElement | null
+          if (sidebarControls) {
+            sidebarControls.classList.toggle('active')
+            quill?.focus()
           }
-          quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
-          quill?.insertEmbed(range.index + 1, 'image', {
-            alt: 'Quill Cloud',
-            url: 'https://quilljs.com/0.20/assets/images/cloud.png'
-          }, (Quill as any).sources.USER)
-          quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
-        }}><i className="fa fa-camera"></i></button>
-        <button id="video-button" onClick={() => {
-          const range = quill?.getSelection(true)
-          if (!range) {
-            return
-          }
-          quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
-          const url = 'https://www.youtube.com/embed/QHH3iSeDBLo?showinfo=0'
-          quill?.insertEmbed(range.index + 1, 'video', url, (Quill as any).sources.USER)
-          quill?.formatText(range.index + 1, 1, { height: '170', width: '400' })
-          quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
-        }}><i className="fa fa-play"></i></button>
-        <button id="tweet-button" onClick={() => {
-          const range = quill?.getSelection(true)
-          const id = '464454167226904576'
-          if (!range) {
-            return
-          }
-          quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
-          quill?.insertEmbed(range.index + 1, 'tweet', id, (Quill as any).sources.USER)
-          quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
-        }}><i className="fa fa-twitter"></i></button>
-        <button id="divider-button" onClick={() => {
-          const range = quill?.getSelection(true)
-          if (!range) {
-            return
-          }
-          quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
-          quill?.insertEmbed(range.index + 1, 'divider', 'true', (Quill as any).sources.USER)
-          quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
-        }}><i className="fa fa-minus"></i></button>
+        }}>
+          <i className="fa fa-plus"></i>
+        </button>
+        <span className="controls">
+          <button id="image-button" onClick={() => {
+            const range = quill?.getSelection(true)
+            if (!range) {
+              return
+            }
+            quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
+            quill?.insertEmbed(range.index + 1, 'image', {
+              alt: 'Quill Cloud',
+              url: 'https://quilljs.com/0.20/assets/images/cloud.png'
+            }, (Quill as any).sources.USER)
+            quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
+          }}><i className="fa fa-camera"></i></button>
+          <button id="video-button" onClick={() => {
+            const range = quill?.getSelection(true)
+            if (!range) {
+              return
+            }
+            quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
+            const url = 'https://www.youtube.com/embed/QHH3iSeDBLo?showinfo=0'
+            quill?.insertEmbed(range.index + 1, 'video', url, (Quill as any).sources.USER)
+            quill?.formatText(range.index + 1, 1, { height: '170', width: '400' })
+            quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
+          }}><i className="fa fa-play"></i></button>
+          <button id="tweet-button" onClick={() => {
+            const range = quill?.getSelection(true)
+            const id = '464454167226904576'
+            if (!range) {
+              return
+            }
+            quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
+            quill?.insertEmbed(range.index + 1, 'tweet', id, (Quill as any).sources.USER)
+            quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
+          }}><i className="fa fa-twitter"></i></button>
+          <button id="divider-button" onClick={() => {
+            const range = quill?.getSelection(true)
+            if (!range) {
+              return
+            }
+            quill?.insertText(range.index, '\n', (Quill as any).sources.USER)
+            quill?.insertEmbed(range.index + 1, 'divider', 'true', (Quill as any).sources.USER)
+            quill?.setSelection(range.index + 2, (Quill as any).sources.SILENT)
+          }}><i className="fa fa-minus"></i></button>
+        </span>
       </div>
       <div id="editor-container">Tell your story...</div>
     </React.Fragment>
