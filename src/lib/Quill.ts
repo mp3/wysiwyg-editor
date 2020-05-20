@@ -6,9 +6,9 @@ declare global {
   }
 }
 
-const Inline = Quill.import('blots/inline')
-const Block = Quill.import('blots/block')
-const BlockEmbed = Quill.import('blots/block/embed')
+export const Inline = Quill.import('blots/inline')
+export const Block = Quill.import('blots/block')
+export const BlockEmbed = Quill.import('blots/block/embed')
 
 class BoldBlot extends Inline {}
 BoldBlot.blotName = 'bold'
