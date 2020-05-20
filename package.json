@@ -6,8 +6,8 @@
   "author": "mp3 <im.in.a.coma.xxx@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel src/index.html --open",
-    "build": "parcel build src/index.html",
+    "dev": "webpack-dev-server",
+    "build": "webpack --mode production",
     "typecheck": "tsc -p . --noEmit",
     "deploy": "netlify deploy -d dist --prod"
   },
@@ -23,8 +23,12 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.0",
+    "html-webpack-plugin": "^4.3.0",
     "netlify-cli": "^2.50.0",
-    "parcel": "^1.12.4",
-    "typescript": "^3.8.3"
+    "ts-loader": "^7.0.4",
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
   }
 }
