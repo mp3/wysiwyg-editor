@@ -1,14 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import { h, render, Fragment } from 'preact'
+import { useState, useEffect } from 'preact/hooks'
 import { createGlobalStyle } from 'styled-components'
 import Quill from './lib/Quill'
 
 const Block = Quill.import('blots/block')
 
 const Main = () => {
-  const [quill, setQuill] = React.useState<Quill | null>(null)
+  const [quill, setQuill] = useState<Quill | null>(null)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (quill) {
       const tooltipControls = document.querySelector("#tooltip-controls") as HTMLElement | null
       const sidebarControls = document.querySelector("#sidebar-controls") as HTMLElement | null
@@ -58,7 +58,7 @@ const Main = () => {
   }, [quill])
 
   return (
-    <React.Fragment>
+    <Fragment>
       <GlobalStyle />
       <div id="tooltip-controls">
         <button id="bold-button" onClick={() => quill?.format('bold', true)}><i className="fa fa-bold"></i></button>
@@ -123,8 +123,8 @@ const Main = () => {
           }}><i className="fa fa-minus"></i></button>
         </span>
       </div>
-      <div id="editor-container">Tell your story...</div>
-    </React.Fragment>
+      <div id="editor-container"></div>
+    </Fragment>
   )
 }
 
@@ -256,5 +256,8 @@ button:active, button:focus {
 }
 `
 
-ReactDOM.render(<Main />, document.getElementById('root'))
+const root = document.getElementById('root')
 
+if (root) {
+  render(<Main />, root)
+}
