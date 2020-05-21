@@ -1,7 +1,7 @@
 import { h } from 'preact'
 import { useState, useEffect, useRef } from 'preact/hooks'
 import styled from 'styled-components'
-import Quill, { Block } from '../lib/Quill'
+import Quill from '../lib/Quill'
 
 type Props = {
   quill: Quill
@@ -26,15 +26,9 @@ export const Tooltip = (props: Props) => {
         return
       }
 
-      if ((range as any).length === 0) {
-        setIsOpen(false)
-        const [block, _offset] = (quill.scroll as any).descendant(Block, (range as any).index)
-        if (block === null) {
-          setIsOpen(false)
-        }
-      } else {
-        setIsOpen(false)
+      setIsOpen(false)
 
+      if ((range as any).length !== 0) {
         const rangeBounds = quill.getBounds(range as any)
         setIsOpen(true)
         setTop(rangeBounds.bottom + 10)
