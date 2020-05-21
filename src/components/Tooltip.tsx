@@ -42,12 +42,12 @@ export const Tooltip = (props: Props) => {
 
   return (
     <TooltipControls ref={tooltipControls}>
-      <button id="bold-button" onClick={() => quill.format('bold', true)}><i className="fa fa-bold"></i></button>
-      <button id="italic-button" onClick={() => quill.format('italic', true)}><i className="fa fa-italic"></i></button>
-      <button id="link-button" onClick={() => quill.format('link', prompt('Enter link URL'))}><i className="fa fa-link"></i></button>
-      <button id="blockquote-button" onClick={() => quill.format('blockquote', true)}><i className="fa fa-quote-right"></i></button>
-      <button id="header-1-button" onClick={() => quill.format('header', 1)}><i className="fa fa-header"><sub>1</sub></i></button>
-      <button id="header-2-button" onClick={() => quill.format('header', 2)}><i className="fa fa-header"><sub>2</sub></i></button>
+      <Button id="bold-button" onClick={() => quill.format('bold', true)}><i className="fa fa-bold"></i></Button>
+      <Button id="italic-button" onClick={() => quill.format('italic', true)}><i className="fa fa-italic"></i></Button>
+      <Button id="link-button" onClick={() => quill.format('link', prompt('Enter link URL'))}><i className="fa fa-link"></i></Button>
+      <Button id="blockquote-button" onClick={() => quill.format('blockquote', true)}><i className="fa fa-quote-right"></i></Button>
+      <Button id="header-1-button" onClick={() => quill.format('header', 1)}><i className="fa fa-header"><sub>1</sub></i></Button>
+      <Button id="header-2-button" onClick={() => quill.format('header', 2)}><i className="fa fa-header"><sub>2</sub></i></Button>
     </TooltipControls>
   )
 }
@@ -74,12 +74,14 @@ const TooltipControls = styled.div`
     top: 0;
     width: 6px;
   }
-  & button {
-    background-color: transparent;
-    color: #fff;
-    border: none;
-  }
-  & button.active {
+`
+
+const Button = styled.button`
+  background-color: transparent;
+  color: #fff;
+  border: none;
+
+  &.active {
     color: #21b384;
   }
 `
