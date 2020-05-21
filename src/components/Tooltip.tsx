@@ -1,6 +1,7 @@
 import { h } from 'preact'
 import { useState, useEffect, useRef } from 'preact/hooks'
 import styled from 'styled-components'
+import { RangeStatic } from 'quill'
 import Quill from '../lib/Quill'
 
 type Props = {
