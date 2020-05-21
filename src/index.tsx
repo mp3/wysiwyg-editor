@@ -24,37 +24,6 @@ html, body {
   width: 100%;
 }
 
-#tooltip-controls {
-  background-color: #111;
-  border-radius: 4px;
-  display: none;
-  padding: 5px 10px;
-  position: absolute;
-}
-#tooltip-controls::before {
-  box-sizing: border-box;
-  border-bottom: 6px solid #111;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  content: ' ';
-  display: block;
-  height: 6px;
-  left: 50%;
-  position: absolute;
-  margin-left: -6px;
-  margin-top: -6px;
-  top: 0;
-  width: 6px;
-}
-#tooltip-controls button {
-  background-color: transparent;
-  color: #fff;
-  border: none;
-}
-#tooltip-controls button.active {
-  color: #21b384;
-}
-
 #sidebar-controls {
   display: none;
   position: absolute;
