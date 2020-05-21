@@ -1,5 +1,6 @@
 import { h } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
+import styled from 'styled-components'
 import Quill, { Block } from '../lib/Quill'
 
 type Props = {
@@ -40,13 +41,45 @@ export const Tooltip = (props: Props) => {
   }, [])
 
   return (
-    <div id="tooltip-controls" ref={tooltipControls}>
+    <TooltipControls ref={tooltipControls}>
       <button id="bold-button" onClick={() => quill.format('bold', true)}><i className="fa fa-bold"></i></button>
       <button id="italic-button" onClick={() => quill.format('italic', true)}><i className="fa fa-italic"></i></button>
       <button id="link-button" onClick={() => quill.format('link', prompt('Enter link URL'))}><i className="fa fa-link"></i></button>
       <button id="blockquote-button" onClick={() => quill.format('blockquote', true)}><i className="fa fa-quote-right"></i></button>
       <button id="header-1-button" onClick={() => quill.format('header', 1)}><i className="fa fa-header"><sub>1</sub></i></button>
       <button id="header-2-button" onClick={() => quill.format('header', 2)}><i className="fa fa-header"><sub>2</sub></i></button>
-    </div>
+    </TooltipControls>
   )
 }
+
+const TooltipControls = styled.div`
+  background-color: #111;
+  border-radius: 4px;
+  display: none;
+  padding: 5px 10px;
+  position: absolute;
+
+  &::before {
+    box-sizing: border-box;
+    border-bottom: 6px solid #111;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    content: ' ';
+    display: block;
+    height: 6px;
+    left: 50%;
+    position: absolute;
+    margin-left: -6px;
+    margin-top: -6px;
+    top: 0;
+    width: 6px;
+  }
+  & button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+  }
+  & button.active {
+    color: #21b384;
+  }
+`
