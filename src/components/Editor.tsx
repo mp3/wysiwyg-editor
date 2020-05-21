@@ -4,7 +4,7 @@ import Quill from '../lib/Quill'
 import { Tooltip } from './Tooltip'
 import { Sidebar } from './Sidebar'
 
-const Editor = () => {
+export const Editor = () => {
   const [quill, setQuill] = useState<Quill | null>(null)
 
   useEffect(() => {
@@ -19,5 +19,3 @@ const Editor = () => {
     </Fragment>
   ) 
 }
-
-export default Editor

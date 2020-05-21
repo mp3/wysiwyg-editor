@@ -1,6 +1,6 @@
 import { h, render, Fragment } from 'preact'
 import { createGlobalStyle } from 'styled-components'
-import Editor from './components/Editor'
+import { Editor } from './components/Editor'
 
 const Main = () => {
   return (
