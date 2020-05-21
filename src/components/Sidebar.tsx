@@ -62,7 +62,9 @@ export const Sidebar = (props: Props) => {
             url: 'https://quilljs.com/0.20/assets/images/cloud.png'
           }, (Quill as any).sources.USER)
           quill.setSelection(range.index + 2, (Quill as any).sources.SILENT)
-        }}><i className="fa fa-camera"></i></Button>
+        }}>
+          <i className="fa fa-camera"></i>
+        </Button>
         <Button onClick={() => {
           const range = quill.getSelection(true)
           if (!range) {
@@ -73,7 +75,9 @@ export const Sidebar = (props: Props) => {
           quill.insertEmbed(range.index + 1, 'video', url, (Quill as any).sources.USER)
           quill.formatText(range.index + 1, 1, { height: '170', width: '400' })
           quill.setSelection(range.index + 2, (Quill as any).sources.SILENT)
-        }}><i className="fa fa-play"></i></Button>
+        }}>
+          <i className="fa fa-play"></i>
+        </Button>
         <Button onClick={() => {
           const range = quill.getSelection(true)
           const id = '464454167226904576'
@@ -83,7 +87,9 @@ export const Sidebar = (props: Props) => {
           quill.insertText(range.index, '\n', (Quill as any).sources.USER)
           quill.insertEmbed(range.index + 1, 'tweet', id, (Quill as any).sources.USER)
           quill.setSelection(range.index + 2, (Quill as any).sources.SILENT)
-        }}><i className="fa fa-twitter"></i></Button>
+        }}>
+          <i className="fa fa-twitter"></i>
+        </Button>
         <Button onClick={() => {
           const range = quill.getSelection(true)
           if (!range) {
@@ -92,7 +98,9 @@ export const Sidebar = (props: Props) => {
           quill.insertText(range.index, '\n', (Quill as any).sources.USER)
           quill.insertEmbed(range.index + 1, 'divider', 'true', (Quill as any).sources.USER)
           quill.setSelection(range.index + 2, (Quill as any).sources.SILENT)
-        }}><i className="fa fa-minus"></i></Button>
+        }}>
+          <i className="fa fa-minus"></i>
+        </Button>
       </Controls>
     </SidebarControls>
   )
