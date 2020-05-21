@@ -24,44 +24,6 @@ html, body {
   width: 100%;
 }
 
-#editor-container {
-  font-family: 'Open Sans', Helvetica, sans-serif;
-  font-size: 1.2em;
-  height: 100%;
-  margin: 0 auto;
-  width: 450px;
-  border: 1px solid #ccc;
-}
-#editor-container .ql-editor {
-  min-height: 100%;
-  height: inherit;
-  overflow-y: inherit;
-  padding-bottom: 75px;
-}
-#editor-container .ql-editor > * {
-  margin-top: 1.5em;
-}
-#editor-container .ql-editor > *:last-child {
-  margin-bottom: 50px;
-}
-#editor-container h1 + p,
-#editor-container h2 + p {
-  margin-top: 0.5em; 
-}
-#editor-container blockquote {
-  border-left: 4px solid #111;
-  padding-left: 1em;
-}
-#editor-container hr {
-  border: none;
-  color: #111;
-  letter-spacing: 1em;
-  text-align: center;
-}
-#editor-container hr:before {
-  content: '...';
-}
-
 #tooltip-controls {
   background-color: #111;
   border-radius: 4px;
