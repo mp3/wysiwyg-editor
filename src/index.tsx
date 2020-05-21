@@ -24,38 +24,6 @@ html, body {
   width: 100%;
 }
 
-#sidebar-controls {
-  display: none;
-  position: absolute;
-}
-#sidebar-controls button {
-  background-color: transparent;
-  border: none;
-  padding: 0;
-}
-#sidebar-controls i.fa {
-  background-color: #fff;
-  border: 1px solid #111;
-  border-radius: 50%;
-  color: #111;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-}
-#sidebar-controls .controls {
-  display: none;
-  margin-left: 15px;
-}
-#sidebar-controls #show-controls i.fa::before {
-  content: "\f067";
-}
-#sidebar-controls.active .controls {
-  display: inline-block;
-}
-#sidebar-controls.active #show-controls i.fa::before {
-  content: "\f00d";
-}
-
 button {
   cursor: pointer;
   display: inline-block;

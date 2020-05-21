@@ -1,5 +1,6 @@
 import { h } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
+import styled from 'styled-components'
 import Quill, { Block } from '../lib/Quill'
 
 type Props = {
@@ -42,13 +43,10 @@ export const Sidebar = (props: Props) => {
   }, [])
 
   return (
-    <div id="sidebar-controls" ref={sidebarControls}>
+    <SidebarControls ref={sidebarControls}>
       <button id="show-controls" onClick={() => {
-        const sidebarControls = document.querySelector("#sidebar-controls") as HTMLElement | null
-        if (sidebarControls) {
-          sidebarControls.classList.toggle('active')
-          quill.focus()
-        }
+        sidebarControls.current.classList.toggle('active')
+        quill.focus()
       }}>
         <i className="fa fa-plus"></i>
       </button>
@@ -96,6 +94,39 @@ export const Sidebar = (props: Props) => {
           quill.setSelection(range.index + 2, (Quill as any).sources.SILENT)
         }}><i className="fa fa-minus"></i></button>
       </span>
-    </div>
+    </SidebarControls>
   )
 }
+
+const SidebarControls = styled.div`
+  display: none;
+  position: absolute;
+
+  & button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+  }
+  & i.fa {
+    background-color: #fff;
+    border: 1px solid #111;
+    border-radius: 50%;
+    color: #111;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+  }
+  & .controls {
+    display: none;
+    margin-left: 15px;
+  }
+  & #show-controls i.fa::before {
+    content: "\f067";
+  }
+  &.active .controls {
+    display: inline-block;
+  }
+  &.active #show-controls i.fa::before {
+    content: "\f00d";
+  }
+`

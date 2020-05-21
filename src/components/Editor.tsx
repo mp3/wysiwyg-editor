@@ -47,7 +47,7 @@ const EditorContainer = styled.div`
 
   & h1 + p,
   & h2 + p {
-    margin-top: 0.5em; 
+    margin-top: 0.5em;
   }
 
   & blockquote {
