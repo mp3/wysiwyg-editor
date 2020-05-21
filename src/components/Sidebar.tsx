@@ -12,6 +12,8 @@ export const Sidebar = (props: Props) => {
   const sidebarControls = useRef<HTMLDivElement>(null)
   const [isSidebarVisible, setIsSidebarVisible] = useState(false)
   const [isControlsOpen, setIsControlsOpen] = useState(false)
+  const [top, setTop] = useState(0)
+  const [left, setLeft] = useState(0)
 
   useEffect(() => {
     quill.addContainer(sidebarControls.current)
@@ -31,8 +33,8 @@ export const Sidebar = (props: Props) => {
           const lineBounds = quill.getBounds(range as any)
           setIsSidebarVisible(true)
           setIsControlsOpen(false)
-          sidebarControls.current.style.top = `${lineBounds.top - 2}px`
-          sidebarControls.current.style.left = `${lineBounds.left - 50}px`
+          setTop(lineBounds.top - 2)
+          setLeft(lineBounds.left - 50)
         } else {
           setIsSidebarVisible(false)
           setIsControlsOpen(false)
@@ -49,6 +51,8 @@ export const Sidebar = (props: Props) => {
       ref={sidebarControls}
       data-is-sidebar-visible={isSidebarVisible}
       data-is-controls-open={isControlsOpen}
+      top={top}
+      left={left}
     >
       <ShowControls onClick={() => {
         setIsControlsOpen(!isControlsOpen)
@@ -112,9 +116,16 @@ export const Sidebar = (props: Props) => {
   )
 }
 
-const SidebarControls = styled.div`
+type SidebarControlsProps = {
+  top: number
+  left: number
+}
+
+const SidebarControls = styled.div<SidebarControlsProps>`
   display: none;
   position: absolute;
+  top: ${props => `${props.top}px`};
+  left: ${props => `${props.left}px`};
 
   &[data-is-sidebar-visible="true"] {
     display: block;
