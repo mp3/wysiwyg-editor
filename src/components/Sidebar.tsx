@@ -29,8 +29,8 @@ export const Sidebar = (props: Props) => {
         const [block, _offset] = (quill.scroll as any).descendant(Block, (range as any).index)
         if (block !== null && block.domNode.firstChild instanceof HTMLBRElement) {
           const lineBounds = quill.getBounds(range as any)
-          setIsControlsOpen(false)
           setIsSidebarVisible(true)
+          setIsControlsOpen(false)
           sidebarControls.current.style.top = `${lineBounds.top - 2}px`
           sidebarControls.current.style.left = `${lineBounds.left - 50}px`
         } else {
