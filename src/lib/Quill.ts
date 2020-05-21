@@ -10,17 +10,22 @@ export const Inline = Quill.import('blots/inline')
 export const Block = Quill.import('blots/block')
 export const BlockEmbed = Quill.import('blots/block/embed')
 
-class BoldBlot extends Inline {}
-BoldBlot.blotName = 'bold'
-BoldBlot.tagName = 'strong'
+class BoldBlot extends Inline {
+  static blotName = 'bold'
+  static tagName = 'strong'
+}
 
-class ItalibBlot extends Inline {}
-ItalibBlot.blotName = 'italic'
-ItalibBlot.tagName = 'em'
+class ItalibBlot extends Inline {
+  static blotName = 'italic'
+  static tagName = 'em'
+}
 
 class LinkBlot extends Inline {
+  static blotName = 'link'
+  static tagName = 'a'
+
   static create(value: string) {
-    const node = super.create()
+    const node = super.create(null) as HTMLElement
     node.setAttribute('href', value)
     node.setAttribute('target', '_blank')
     return node
@@ -30,28 +35,32 @@ class LinkBlot extends Inline {
     return node.getAttribute('href')
   }
 }
-LinkBlot.blotName = 'link'
-LinkBlot.tagName = 'a'
 
-class BlockquotesBlot extends Block {}
-BlockquotesBlot.blotName = 'blockquote'
-BlockquotesBlot.tagName = 'blockquote'
+class BlockquotesBlot extends Block {
+  static blotName = 'blockquote'
+  static tagName = 'blockquote'
+}
 
 class HeaderBlot extends Block {
+  static blotName = 'header'
+  static tagName: string | string[] | any = ['H1', 'H2']
+
   static formats(node: Element) {
     return HeaderBlot.tagName.indexOf(node.tagName) + 1
   }
 }
-HeaderBlot.blotName = 'header'
-HeaderBlot.tagName = ['H1', 'H2']
 
-class DividerBlot extends BlockEmbed {}
-DividerBlot.blotName = 'divider'
-DividerBlot.tagName = 'hr'
+class DividerBlot extends BlockEmbed {
+  static blotName = 'divider'
+  static tagName = 'hr'
+}
 
 class ImageBlot extends BlockEmbed {
+  static blotName = 'image'
+  static tagName = 'img'
+
   static create(value: { alt: string, url: string }) {
-    const node = super.create()
+    const node = super.create(null) as HTMLElement
     node.setAttribute('alt', value.alt)
     node.setAttribute('src', value.url)
     return node
@@ -64,15 +73,16 @@ class ImageBlot extends BlockEmbed {
     }
   }
 }
-ImageBlot.blotName = 'image'
-ImageBlot.tagName = 'img'
 
 class VideoBlot extends BlockEmbed {
+  static blotName = 'video'
+  static tagName = 'iframe'
+
   static create(url: string) {
-    const node = super.create()
+    const node = super.create(null) as HTMLElement
     node.setAttribute('src', url)
     node.setAttribute('frameborder', '0')
-    node.setAttribute('allowfullscreen', true)
+    node.setAttribute('allowfullscreen', 'true')
     return node
   }
 
@@ -90,21 +100,23 @@ class VideoBlot extends BlockEmbed {
   format(name: string, value: string) {
     if (name === 'height' || name === 'width') {
       if (value) {
-        this.domNode.setAttribute(name, value)
+        (this.domNode as HTMLElement).setAttribute(name, value)
       } else {
-        this.domNode.removeAttribute(name, value)
+        (this.domNode as HTMLElement).removeAttribute(name)
       }
     } else {
       super.format(name, value)
     }
   }
 }
-VideoBlot.blotName = 'video'
-VideoBlot.tagName = 'iframe'
 
 class TweetBlot extends BlockEmbed {
+  static blotName = 'tweet'
+  static tagName = 'div'
+  static className = 'tweet'
+
   static create(id: string) {
-    const node = super.create()
+    const node = super.create(null) as HTMLElement
     node.dataset.id = id;
     window.twttr.widgets.createTweet(id, node);
     return node
@@ -114,9 +126,6 @@ class TweetBlot extends BlockEmbed {
     return domNode.dataset.id
   }
 }
-TweetBlot.blotName = 'tweet'
-TweetBlot.tagName = 'div'
-TweetBlot.className = 'tweet'
 
 Quill.register(BoldBlot)
 Quill.register(ItalibBlot)

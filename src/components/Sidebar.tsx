@@ -2,7 +2,7 @@ import { h } from 'preact'
 import { useState, useEffect, useRef } from 'preact/hooks'
 import styled from 'styled-components'
 import { RangeStatic } from 'quill'
-import { Blot } from 'parchment/src/blot/abstract/blot'
+import BlockBlot from 'parchment/src/blot/block'
 import Quill, { Block } from '../lib/Quill'
 
 type Props = {
@@ -26,7 +26,7 @@ export const Sidebar = (props: Props) => {
       }
 
       if (range.length === 0) {
-        const [block] = quill.scroll.scroll.descendant<Blot>(Block, range.index)
+        const [block] = quill.scroll.scroll.descendant<BlockBlot>(Block, range.index)
         if (block !== null && block.domNode.firstChild instanceof HTMLBRElement) {
           const lineBounds = quill.getBounds(range.index)
           setIsSidebarVisible(true)
