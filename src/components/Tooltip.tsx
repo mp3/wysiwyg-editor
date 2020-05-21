@@ -17,19 +17,15 @@ export const Tooltip = (props: Props) => {
   useEffect(() => {
     quill.addContainer(tooltipControls.current)
 
-    quill.on((Quill as any).events.EDITOR_CHANGE, (eventType, range) => {
-      if (eventType !== (Quill as any).events.SELECTION_CHANGE) {
-        return
-      }
-
-      if (range === null) {
+    quill.on('editor-change', (eventType: 'text-change' | 'selection-change', range: RangeStatic) => {
+      if (eventType !== 'selection-change') {
         return
       }
 
       setIsOpen(false)
 
-      if ((range as any).length !== 0) {
-        const rangeBounds = quill.getBounds(range as any)
+      if (range.length !== 0) {
+        const rangeBounds = quill.getBounds(range.index, range.length)
         setIsOpen(true)
         setTop(rangeBounds.bottom + 10)
         setLeft(rangeBounds.left + rangeBounds.width/2 - tooltipControls.current.offsetWidth/2)
