@@ -10,6 +10,7 @@ type Props = {
 export const Sidebar = (props: Props) => {
   const { quill } = props
   const sidebarControls = useRef<HTMLDivElement>(null)
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false)
   const [isControlsOpen, setIsControlsOpen] = useState(false)
 
   useEffect(() => {
@@ -29,22 +30,26 @@ export const Sidebar = (props: Props) => {
         if (block !== null && block.domNode.firstChild instanceof HTMLBRElement) {
           const lineBounds = quill.getBounds(range as any)
           setIsControlsOpen(false)
-          sidebarControls.current.style.display = 'block'
+          setIsSidebarVisible(true)
           sidebarControls.current.style.top = `${lineBounds.top - 2}px`
           sidebarControls.current.style.left = `${lineBounds.left - 50}px`
         } else {
-          sidebarControls.current.style.display = 'none'
+          setIsSidebarVisible(false)
           setIsControlsOpen(false)
         }
       } else {
-        sidebarControls.current.style.display = 'none'
+        setIsSidebarVisible(false)
         setIsControlsOpen(false)
       }
     })
   }, [])
 
   return (
-    <SidebarControls ref={sidebarControls} data-is-controls-open={isControlsOpen}>
+    <SidebarControls
+      ref={sidebarControls}
+      data-is-sidebar-visible={isSidebarVisible}
+      data-is-controls-open={isControlsOpen}
+    >
       <ShowControls onClick={() => {
         setIsControlsOpen(!isControlsOpen)
         quill.focus()
@@ -110,6 +115,10 @@ export const Sidebar = (props: Props) => {
 const SidebarControls = styled.div`
   display: none;
   position: absolute;
+
+  &[data-is-sidebar-visible="true"] {
+    display: block;
+  }
 
   & i.fa {
     background-color: #fff;
