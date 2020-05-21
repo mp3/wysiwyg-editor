@@ -49,18 +49,17 @@ export const Sidebar = (props: Props) => {
   return (
     <SidebarControls
       ref={sidebarControls}
-      data-is-sidebar-visible={isSidebarVisible}
-      data-is-controls-open={isControlsOpen}
+      visible={isSidebarVisible}
       top={top}
       left={left}
     >
-      <ShowControls onClick={() => {
+      <ShowControls isOpen={isControlsOpen} onClick={() => {
         setIsControlsOpen(!isControlsOpen)
         quill.focus()
       }}>
         <i className="fa fa-plus"></i>
       </ShowControls>
-      <Controls>
+      <Controls isOpen={isControlsOpen}>
         <Button onClick={() => {
           const range = quill.getSelection(true)
           if (!range) {
@@ -117,19 +116,20 @@ export const Sidebar = (props: Props) => {
 }
 
 type SidebarControlsProps = {
+  visible: boolean
   top: number
   left: number
 }
 
+type ControlsProps = {
+  isOpen: boolean
+}
+
 const SidebarControls = styled.div<SidebarControlsProps>`
-  display: none;
+  display: ${props => props.visible ? 'block' : 'none'};
   position: absolute;
   top: ${props => `${props.top}px`};
   left: ${props => `${props.left}px`};
-
-  &[data-is-sidebar-visible="true"] {
-    display: block;
-  }
 
   & i.fa {
     background-color: #fff;
@@ -148,21 +148,13 @@ const Button = styled.button`
   padding: 0;
 `
 
-const ShowControls = styled(Button)`
+const ShowControls = styled(Button)<ControlsProps>`
   & i.fa::before {
-    content: "\f067";
-  }
-
-  [data-is-controls-open="true"] & i.fa::before {
-    content: "\f00d";
+    content: ${props => props.isOpen ? '"\f00d"' : '"\f067"'};
   }
 `
 
-const Controls = styled.span`
-  display: none;
+const Controls = styled.span<ControlsProps>`
+  display: ${props => props.isOpen ? 'inline-block' : 'none'};
   margin-left: 15px;
-
-  [data-is-controls-open="true"] & {
-    display: inline-block;
-  }
 `
