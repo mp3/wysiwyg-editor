@@ -38,7 +38,7 @@ const Editor = () => {
         tooltipControls.setAttribute('style', 'display: none;')
         const [block, _offset] = (quill.scroll as any).descendant(Block, (range as any).index)
         if (block != null && block.domNode.firstChild instanceof HTMLBRElement) {
-          let lineBounds = quill.getBounds(range as any)
+          const lineBounds = quill.getBounds(range as any)
           sidebarControls.classList.remove('active')
           sidebarControls.style.display = 'block'
           sidebarControls.style.top = `${lineBounds.top - 2}px`
@@ -53,7 +53,7 @@ const Editor = () => {
         sidebarControls.style.display = 'none'
         sidebarControls.classList.remove('active')
 
-        let rangeBounds = quill.getBounds(range as any)
+        const rangeBounds = quill.getBounds(range as any)
         tooltipControls.style.display = 'block'
         tooltipControls.style.top = `${rangeBounds.bottom + 10}px`
         tooltipControls.style.left = `${rangeBounds.left + rangeBounds.width/2 - tooltipControls.offsetWidth/2}px`
