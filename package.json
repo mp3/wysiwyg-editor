@@ -12,6 +12,7 @@
     "deploy": "netlify deploy -d dist --prod"
   },
   "dependencies": {
+    "parchment": "^2.0.0-dev.2",
     "preact": "^10.4.4",
     "quill": "^1.3.7",
     "styled-components": "^5.1.0"
