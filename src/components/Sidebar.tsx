@@ -10,7 +10,7 @@ type Props = {
 export const Sidebar = (props: Props) => {
   const { quill } = props
   const sidebarControls = useRef<HTMLDivElement>(null)
-  const [isActive, setIsActive] = useState(false)
+  const [isControlsOpen, setIsControlsOpen] = useState(false)
 
   useEffect(() => {
     quill.addContainer(sidebarControls.current)
@@ -28,25 +28,25 @@ export const Sidebar = (props: Props) => {
         const [block, _offset] = (quill.scroll as any).descendant(Block, (range as any).index)
         if (block !== null && block.domNode.firstChild instanceof HTMLBRElement) {
           const lineBounds = quill.getBounds(range as any)
-          setIsActive(false)
+          setIsControlsOpen(false)
           sidebarControls.current.style.display = 'block'
           sidebarControls.current.style.top = `${lineBounds.top - 2}px`
           sidebarControls.current.style.left = `${lineBounds.left - 50}px`
         } else {
           sidebarControls.current.style.display = 'none'
-          setIsActive(false)
+          setIsControlsOpen(false)
         }
       } else {
         sidebarControls.current.style.display = 'none'
-        setIsActive(false)
+        setIsControlsOpen(false)
       }
     })
   }, [])
 
   return (
-    <SidebarControls ref={sidebarControls} data-is-active={isActive}>
+    <SidebarControls ref={sidebarControls} data-is-controls-open={isControlsOpen}>
       <ShowControls onClick={() => {
-        setIsActive(!isActive)
+        setIsControlsOpen(!isControlsOpen)
         quill.focus()
       }}>
         <i className="fa fa-plus"></i>
@@ -133,7 +133,7 @@ const ShowControls = styled(Button)`
     content: "\f067";
   }
 
-  [data-is-active="true"] & i.fa::before {
+  [data-is-controls-open="true"] & i.fa::before {
     content: "\f00d";
   }
 `
@@ -142,7 +142,7 @@ const Controls = styled.span`
   display: none;
   margin-left: 15px;
 
-  [data-is-active="true"] & {
+  [data-is-controls-open="true"] & {
     display: inline-block;
   }
 `
