@@ -44,14 +44,14 @@ export const Sidebar = (props: Props) => {
 
   return (
     <SidebarControls ref={sidebarControls}>
-      <Button id="show-controls" onClick={() => {
+      <ShowControls onClick={() => {
         sidebarControls.current.classList.toggle('active')
         quill.focus()
       }}>
         <i className="fa fa-plus"></i>
-      </Button>
-      <span className="controls">
-        <Button id="image-button" onClick={() => {
+      </ShowControls>
+      <Controls>
+        <Button onClick={() => {
           const range = quill.getSelection(true)
           if (!range) {
             return
@@ -63,7 +63,7 @@ export const Sidebar = (props: Props) => {
           }, (Quill as any).sources.USER)
           quill.setSelection(range.index + 2, (Quill as any).sources.SILENT)
         }}><i className="fa fa-camera"></i></Button>
-        <Button id="video-button" onClick={() => {
+        <Button onClick={() => {
           const range = quill.getSelection(true)
           if (!range) {
             return
@@ -74,7 +74,7 @@ export const Sidebar = (props: Props) => {
           quill.formatText(range.index + 1, 1, { height: '170', width: '400' })
           quill.setSelection(range.index + 2, (Quill as any).sources.SILENT)
         }}><i className="fa fa-play"></i></Button>
-        <Button id="tweet-button" onClick={() => {
+        <Button onClick={() => {
           const range = quill.getSelection(true)
           const id = '464454167226904576'
           if (!range) {
@@ -84,7 +84,7 @@ export const Sidebar = (props: Props) => {
           quill.insertEmbed(range.index + 1, 'tweet', id, (Quill as any).sources.USER)
           quill.setSelection(range.index + 2, (Quill as any).sources.SILENT)
         }}><i className="fa fa-twitter"></i></Button>
-        <Button id="divider-button" onClick={() => {
+        <Button onClick={() => {
           const range = quill.getSelection(true)
           if (!range) {
             return
@@ -93,7 +93,7 @@ export const Sidebar = (props: Props) => {
           quill.insertEmbed(range.index + 1, 'divider', 'true', (Quill as any).sources.USER)
           quill.setSelection(range.index + 2, (Quill as any).sources.SILENT)
         }}><i className="fa fa-minus"></i></Button>
-      </span>
+      </Controls>
     </SidebarControls>
   )
 }
@@ -111,23 +111,29 @@ const SidebarControls = styled.div`
     height: 32px;
     line-height: 32px;
   }
-  & .controls {
-    display: none;
-    margin-left: 15px;
-  }
-  & #show-controls i.fa::before {
-    content: "\f067";
-  }
-  &.active .controls {
-    display: inline-block;
-  }
-  &.active #show-controls i.fa::before {
-    content: "\f00d";
-  }
 `
 
 const Button = styled.button`
   background-color: transparent;
   border: none;
   padding: 0;
+`
+
+const ShowControls = styled(Button)`
+  & i.fa::before {
+    content: "\f067";
+  }
+
+  .active & i.fa::before {
+    content: "\f00d";
+  }
+`
+
+const Controls = styled.span`
+  display: none;
+  margin-left: 15px;
+
+  .active & {
+    display: inline-block;
+  }
 `
