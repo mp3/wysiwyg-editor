@@ -18,8 +18,11 @@ export const Tooltip = (props: Props) => {
   useEffect(() => {
     quill.addContainer(tooltipControls.current)
 
-    quill.on('editor-change', (eventType: 'text-change' | 'selection-change', range: RangeStatic) => {
+    quill.on('editor-change', (eventType: 'text-change' | 'selection-change', range: RangeStatic | null) => {
       if (eventType !== 'selection-change') {
+        return
+      }
+      if (range === null) {
         return
       }
 
